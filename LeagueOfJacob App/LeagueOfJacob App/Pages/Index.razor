@@ -1,0 +1,33 @@
+﻿@page "/"
+@inject LeagueDataService dataService
+@inject NavigationManager _nav
+@using LeagueOfJacob_App.Data;
+
+<PageTitle>Index</PageTitle>
+
+<input type="region" @bind="@region" placeholder="Enter Region">
+
+<input type="username" @bind="@username" placeholder="Enter Username">
+
+<button class="btn btn-primary" @onclick="search">Search</button>
+
+@code{
+
+    private string? region;
+    private string? username;
+    private void search()
+    {
+
+        if (region != null && username != null)
+        {
+
+            dataService.setLeagueData(region, username);
+            _nav.NavigateTo("/ViewProfile", false);
+            Console.WriteLine("Phase 0"+region+username);
+        }
+        else
+        {
+           //add error warnings 
+        }
+    }
+}

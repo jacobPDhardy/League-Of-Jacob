@@ -1,0 +1,15 @@
+﻿@page "/ViewProfile"
+@inject LeagueDataService dataService
+@using LeagueOfJacob_App.Data;
+
+<p role="status">@rank</p>
+
+@code {
+
+    public String? rank;
+    protected override async Task OnInitializedAsync()
+    {
+        rank = dataService.getLeagueData()[2];
+        
+    }
+}
