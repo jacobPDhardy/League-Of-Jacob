@@ -1,0 +1,9 @@
+﻿@page "/ViewProfile"
+@using LeagueOfJacob_App.Data;
+
+<p role="status">@rank</p>
+
+@code {
+    public LeagueData leagueData = LeagueData.Instance;
+    public String rank = LeagueData.Instance.getLeagueData()[2];
+}

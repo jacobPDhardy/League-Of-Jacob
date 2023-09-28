@@ -1,0 +1,48 @@
+﻿@page "/"
+@inject NavigationManager _nav
+@using LeagueOfJacob_App.Data;
+
+<PageTitle>LeagueOfJacob</PageTitle>
+
+<input type="region" @bind="@region" placeholder="Enter Region Code">
+<p>@regionOut</p>
+
+<input type="username" @bind="@username" placeholder="Enter Username">
+<p>@userOut</p>
+
+<button class="btn btn-primary" @onclick="search">Search</button>
+
+@code{
+
+    private string? regionOut;
+    private string? userOut;
+
+    private string region = "";
+    private string username = "";
+
+    public LeagueData leagueData = LeagueData.Instance;
+    private void search()
+    {
+        var servers = new List<string> {"br","eune","euw","lan","las","na","oce","ru","tr","jp","kr","ph","sg","tw","th","vn","pbe",""};
+
+        if (servers.Contains(region.ToLower()))
+        {
+            if (leagueData.exists(region, username))
+            {
+
+                leagueData.setLeagueData(region, username);
+                _nav.NavigateTo("/ViewProfile", false);
+            }
+            else if(username != "")
+            {
+
+                userOut = "User does not exist";
+            }
+        }
+        else
+        {
+
+            regionOut = "Region code does not exist";    
+        }
+    }
+}
