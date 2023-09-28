@@ -1,6 +1,7 @@
 ﻿@page "/ViewProfile"
 @inject LeagueDataService dataService
 @using LeagueOfJacob_App.Data;
+@inject NavigationManager _nav
 
 <p role="status">@rank</p>
 
@@ -8,8 +9,11 @@
 
     public String? rank;
     protected override async Task OnInitializedAsync()
-    {
+    {       
         rank = dataService.getLeagueData()[2];
-        
+        if(rank == "Invalid")
+        {
+            _nav.NavigateTo("/", false);
+        }
     }
 }

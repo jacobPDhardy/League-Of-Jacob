@@ -29,14 +29,22 @@ namespace LeagueOfJacob_App.Data
 
             String url = "https://www.leagueofgraphs.com/summoner/" + region + "/" + username;
             var httpClient = new HttpClient();
-            var html = httpClient.GetStringAsync(url).Result;
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(html);
 
-            var rankElement = htmlDocument.DocumentNode.SelectSingleNode("//div[@class='leagueTier']");
-            var rank = rankElement.InnerText.Trim();
+            HtmlDocument? htmlDocument = new HtmlDocument();
+            String rank = "Invalid";
+            try
+            {
+                var html = httpClient.GetStringAsync(url).Result;
+                htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
+                var rankElement = htmlDocument.DocumentNode.SelectSingleNode("//div[@class='leagueTier']");
+                rank = rankElement.InnerText.Trim();
+            }
+            catch (Exception e) {
+                
+            }
+
             String[] result = { region,username,rank};
-            Console.WriteLine(result[0] + result[1] + result[2]);
             return result;
         }
     }
